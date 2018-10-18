@@ -13,6 +13,7 @@ public class ReverseServer {
     public static void main(String[] args) {
         if (args.length < 1) return;
  
+        //test
         int port = Integer.parseInt(args[0]);
  
         try (ServerSocket serverSocket = new ServerSocket(port)) {
