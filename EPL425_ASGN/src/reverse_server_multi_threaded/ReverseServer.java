@@ -12,7 +12,7 @@ public class ReverseServer {
  
 	
     public static void main(String[] args) { 
-        int port = Integer.parseInt(args[1]);
+        int port = Integer.parseInt(args[0]);
  
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  
