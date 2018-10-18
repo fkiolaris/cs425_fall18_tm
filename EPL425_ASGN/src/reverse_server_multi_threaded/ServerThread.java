@@ -3,9 +3,6 @@ package reverse_server_multi_threaded;
 import java.io.*;
 import java.net.*;
 
-import reverse_server_multi_threaded.ClientFormatMessage.Body;
-import reverse_server_multi_threaded.ClientFormatMessage.Header;
-
 /**
  * This thread is responsible to handle client connection.
  */

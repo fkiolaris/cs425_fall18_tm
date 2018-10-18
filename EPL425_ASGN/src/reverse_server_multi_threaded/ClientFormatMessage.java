@@ -3,9 +3,7 @@ package reverse_server_multi_threaded;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
-
 import org.codehaus.jackson.map.ObjectMapper;
-import org.omg.CORBA.Object;
 
 public class ClientFormatMessage implements Serializable {
 
@@ -15,13 +13,6 @@ public class ClientFormatMessage implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-//	public ClientFormatMessage(Header header, Body body) {
-//		super();
-////		this.header = header;
-////		this.body = body;
-//		setHeader(header);
-//		setBody(body);
-//	}
 
 	public Header getHeader() {
 		return header;

@@ -1,4 +1,4 @@
-package reverse_server_multi_threaded;
+package server_socket_api;
 
 import java.io.*;
 import java.net.*;
@@ -10,9 +10,9 @@ import java.net.*;
  */
 public class ReverseServer {
  
-	
-    public static void main(String[] args) { 
-        int port = Integer.parseInt(args[1]);
+    public static void main(String[] args) {
+
+        int port = 2001;
  
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  

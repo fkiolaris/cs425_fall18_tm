@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class ClientThread extends Thread  {
 	private String serverID;
@@ -48,8 +47,6 @@ public class ClientThread extends Thread  {
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
            
- 
-//            Scanner scan = new Scanner(System.in);
             String text;
             int currentRequest = 0;
             do {                
@@ -71,7 +68,6 @@ public class ClientThread extends Thread  {
             writer.println(text);
             
             System.out.println("Connection terminated..");
-//            scan.close();
             socket.close();
  
         } catch (UnknownHostException ex) {
