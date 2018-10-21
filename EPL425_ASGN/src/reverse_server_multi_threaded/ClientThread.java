@@ -18,13 +18,15 @@ public class ClientThread extends Thread  {
 	private int clientID;
 	private int port;
 	private String clientIP;
+	private int repetitionID;
 	private static final int MAX_REQUESTS_PER_USER = 300;
 
-	public ClientThread(int port, String serverID, int clientID) {
+	public ClientThread(int port, String serverID, int clientID, int repetitionID) {
 		this.clientID = clientID;
 		this.serverID = serverID;
 		this.port = port;
 		this.clientIP = getClientIp();
+		this.repetitionID = repetitionID;
 	}
 	
 	private static String getClientIp(){
@@ -39,21 +41,20 @@ public class ClientThread extends Thread  {
 			e.printStackTrace();
 		}
 		remoteAddr = inetAddress.getHostAddress();
-
         return remoteAddr;
     }
 
 	public void run() {
-
+		
         try (Socket socket = new Socket(serverID, port)) {
-        	 
+       	 
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
            
             String text;
             int currentRequest = 0;
             do {                
-                ClientFormatMessage clientFormatMessage = ClientFormatMessage.getInstance("Hello", clientID, clientIP, null, port);  
+                ClientFormatMessage clientFormatMessage = ClientFormatMessage.getInstance("Hello", clientID, clientIP, null, port, repetitionID);  
                 text = ClientFormatMessage.objectToString(clientFormatMessage);
                                
                 long startTime = System.currentTimeMillis();	//start request time
@@ -64,36 +65,26 @@ public class ClientThread extends Thread  {
  
                 String response = reader.readLine();
                 long elapsedTime = System.currentTimeMillis() - startTime;
-                ReverseClient.writeToFile(elapsedTime+"", clientID);
+                ReverseClient.writeToFile(elapsedTime+"", clientID, repetitionID);
  
                 System.out.println("Total elapsed http request/response time in milliseconds: " + elapsedTime);
                 System.out.println("Server Response:"+response);
  
             } while (currentRequest++ < MAX_REQUESTS_PER_USER);
                                 
-            ClientFormatMessage clientFormatMessage = ClientFormatMessage.getInstance("BYE", clientID, clientIP, null, port);
+            ClientFormatMessage clientFormatMessage = ClientFormatMessage.getInstance("BYE", clientID, clientIP, null, port, repetitionID);
             text = ClientFormatMessage.objectToString(clientFormatMessage);
             writer.println(text);
             
             System.out.println("Connection terminated..");
             socket.close();
  
-        } catch (UnknownHostException ex) {
- 
+        } catch (UnknownHostException ex) {	 
             System.out.println("Server not found: " + ex.getMessage());
  
-        } catch (IOException ex) {
- 
+        } catch (IOException ex) {	 
             System.out.println("I/O error: " + ex.getMessage());
         }
 	}
 	
-
-//	public void sendHttpRequest(byte[] requestData, Socket connection) {
-//	    long startTime = System.currentTimeMillis();
-//	    writeYourRequestData(connection.getOutputStream(), requestData);
-//	    byte[] responseData = readYourResponseData(connection.getInputStream());
-//	    long elapsedTime = System.currentTimeMillis() - startTime;
-//	    System.out.println("Total elapsed http request/response time in milliseconds: " + elapsedTime);
-//	}
 }

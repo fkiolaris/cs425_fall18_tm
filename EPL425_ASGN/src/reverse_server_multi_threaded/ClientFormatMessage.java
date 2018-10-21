@@ -5,8 +5,7 @@ import java.io.Serializable;
 import java.util.Random;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class ClientFormatMessage implements Serializable {
-
+public class ClientFormatMessage implements Serializable {	
 	
 	/**
 	 * 
@@ -65,7 +64,15 @@ public class ClientFormatMessage implements Serializable {
 		public void setPayload(String payload) {
 			this.payload = payload;
 		}
+
+		public int getRepetitionID() {
+			return repetitionID;
+		}
+		public void setRepetitionID(int repetitionID) {
+			this.repetitionID = repetitionID;
+		}
 		
+		private int repetitionID;
 		private String clientIP;
 		private int port;
 		private int clientID;
@@ -125,7 +132,7 @@ public class ClientFormatMessage implements Serializable {
 		return payload;
 	}
 	
-	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, String payload, int port){
+	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, String payload, int port, int repetitionID){
 		Body body = new Body();
 		Header header = new Header();
 		ClientFormatMessage clientFormatMessage = new ClientFormatMessage();
@@ -135,6 +142,7 @@ public class ClientFormatMessage implements Serializable {
 		header.setClientIP(clientIP);
 		header.setPayload(payload);
 		header.setPort(port);
+		header.setRepetitionID(repetitionID);
 		
 		clientFormatMessage.setBody(body);
 		clientFormatMessage.setHeader(header);

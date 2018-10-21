@@ -12,32 +12,39 @@ import java.io.IOException;
 public class ReverseClient{
 	
 	private static final int USER = 10;
-	private static final String latencyFile = "latencyTime.txt";
+	private static final String latencyFile = "latencyTime";
 
     public static void main(String[] args) {
-
-
         
         try {
             String hostname = args[0];
             int port = Integer.parseInt(args[1]);
-			initializeFiles();
-			for (int i=1; i<=USER; i++ ) new ClientThread(port, hostname, i).start();
+            int repetitions = 1;
+            		//Integer.parseInt(args[2]);
+            
+            for (int i=1; i<=repetitions; i++) initializeFiles(i);            
+            runAllUsers(repetitions, port, hostname); 
+           
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}       
     }
     
-    public static void initializeFiles() throws IOException {
-    	File file = new File(latencyFile);
+    synchronized static void runAllUsers(int repetitionID, int port, String hostname) {
+    	for (int i=1; i<=USER; i++ ) new ClientThread(port, hostname, i, repetitionID).start();
+    }
+    
+    public static void initializeFiles(int fileID) throws IOException {
+    	File file = new File(latencyFile+fileID);
     	DataOutputStream stream = new DataOutputStream(new FileOutputStream(file));
 		stream.writeBytes("");
 		stream.close();
     }
     
-	 synchronized static void writeToFile(String time, int userID) throws IOException {			
-		File file = new File(latencyFile);
+	 synchronized static void writeToFile(String time, int userID, int fileID) throws IOException {			
+		File file = new File(latencyFile+fileID);
 		file.createNewFile();		
 		DataOutputStream stream = new DataOutputStream(new FileOutputStream(file, true));
 		stream.writeBytes("UserID:"+userID+" "+time+"\n");

@@ -12,14 +12,14 @@ import java.util.TimerTask;
  */
 public class ReverseServer {
 	
-	private static final String THROUGHPUT_FILE = "throughtputs.txt";	
+	private static final String THROUGHPUT_FILE = "throughtputs";	
 	
     public static void main(String[] args) { 
         int port = Integer.parseInt(args[0]);
  
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  
-        	initializeFiles();
+//        	initializeFiles();
             System.out.println("Server is listening on port " + port);
  
             while (true) {
@@ -35,15 +35,15 @@ public class ReverseServer {
         }
     }
     
-    public static void initializeFiles() throws IOException {
-    	File file = new File(THROUGHPUT_FILE);
+    public static void initializeFile(int fileID) throws IOException {
+    	File file = new File(THROUGHPUT_FILE+fileID);
     	DataOutputStream stream = new DataOutputStream(new FileOutputStream(file));
 		stream.writeBytes("");
 		stream.close();
     }
     
-    synchronized static void writeToFile(int requests) throws IOException {			
-		File file = new File(THROUGHPUT_FILE);
+    synchronized static void writeToFile(int requests, int fileID) throws IOException {			
+		File file = new File(THROUGHPUT_FILE + fileID);
 		file.createNewFile();		
 		DataOutputStream stream = new DataOutputStream(new FileOutputStream(file, true));
 		stream.writeBytes(requests+"\n");

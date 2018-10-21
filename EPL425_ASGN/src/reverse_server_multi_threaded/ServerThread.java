@@ -38,10 +38,11 @@ public class ServerThread extends Thread {
 							"Connection with client " + clientFormatMessage.getHeader().getClientID() + " terminated..");
 					break;
 				}else {
-					startTimer();
+					startTimer(clientFormatMessage.getHeader().getRepetitionID());
 				}
 				ClientFormatMessage serverFormatMessage = ClientFormatMessage.getInstance("WELCOME", clientFormatMessage.getHeader().getClientID(), 
-						clientFormatMessage.getHeader().getClientIP(), ClientFormatMessage.calculatePayload(), clientFormatMessage.getHeader().getPort());			
+						clientFormatMessage.getHeader().getClientIP(), ClientFormatMessage.calculatePayload(), clientFormatMessage.getHeader().getPort(),
+						clientFormatMessage.getHeader().getRepetitionID());			
 
 
 				System.out.println("Client Request:" + requestMessage);
@@ -56,7 +57,7 @@ public class ServerThread extends Thread {
 		}
 	}
 	
-    synchronized static void startTimer() {
+    synchronized static void startTimer(int repetitionID) {
 		counter++;
     	if (counter == 1) {
 	    	Timer timer = new Timer();    
@@ -64,7 +65,7 @@ public class ServerThread extends Thread {
 	    	  @Override
 	    	  public void run() {
 	    		  try {
-					ReverseServer.writeToFile(counter);
+					ReverseServer.writeToFile(counter, repetitionID);
 					counter = 0;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
