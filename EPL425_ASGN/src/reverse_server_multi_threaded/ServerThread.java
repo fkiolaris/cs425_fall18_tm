@@ -2,13 +2,17 @@ package reverse_server_multi_threaded;
 
 import java.io.*;
 import java.net.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This thread is responsible to handle client connection.
  */
 public class ServerThread extends Thread {
 	private Socket socket;
-
+	private static int counter = 0;
+	private static final int TIMER_MILISECONDS = 3000;
+	
 	public ServerThread(Socket socket) {
 		this.socket = socket;
 	}
@@ -23,17 +27,22 @@ public class ServerThread extends Thread {
 
 			String requestMessage;
 
-			do {
-				requestMessage = reader.readLine();
-				System.out.println("Request:"+requestMessage);				
+			do {				
+				requestMessage = reader.readLine();									
+				System.out.println("Request:"+requestMessage);	
+											
+			
 				ClientFormatMessage clientFormatMessage = ClientFormatMessage.stringToObject(requestMessage);
 				if (clientFormatMessage.getBody().getMsgBody().equals("BYE")) {
 					System.out.println(
 							"Connection with client " + clientFormatMessage.getHeader().getClientID() + " terminated..");
 					break;
+				}else {
+					startTimer();
 				}
 				ClientFormatMessage serverFormatMessage = ClientFormatMessage.getInstance("WELCOME", clientFormatMessage.getHeader().getClientID(), 
 						clientFormatMessage.getHeader().getClientIP(), ClientFormatMessage.calculatePayload(), clientFormatMessage.getHeader().getPort());			
+
 
 				System.out.println("Client Request:" + requestMessage);
 				writer.println(ClientFormatMessage.objectToString(serverFormatMessage));
@@ -46,4 +55,23 @@ public class ServerThread extends Thread {
 			ex.printStackTrace();
 		}
 	}
+	
+    synchronized static void startTimer() {
+		counter++;
+    	if (counter == 1) {
+	    	Timer timer = new Timer();    
+	    	timer.schedule(new TimerTask() {
+	    	  @Override
+	    	  public void run() {
+	    		  try {
+					ReverseServer.writeToFile(counter);
+					counter = 0;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}    		  
+	    	  }
+	    	}, TIMER_MILISECONDS);
+    	}    	
+    }
 }

@@ -38,23 +38,7 @@ public class ClientFormatMessage implements Serializable {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
-		
-//		public Header(String clientIP, int port, int clientID) {
-//			super();
-//			setClientIP(clientIP);
-//			setClientID(clientID);
-//			setPort(port);
-////			this.clientIP = clientIP;
-////			this.port = port;
-////			this.clientID = clientID;
-//		}
-		
-//		public Header(String payload) {
-//			super();
-////			this.payload = payload;
-//			setPayload(payload);
-//		}
+		private static final long serialVersionUID = 1L;	
 		
 		public String getClientIP() {
 			return clientIP;
@@ -94,12 +78,6 @@ public class ClientFormatMessage implements Serializable {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-
-//		public Body(String msgBody) {
-//			super();
-//			setMsgBody(msgBody);
-////			this.msgBody = msgBody;
-//		}
 
 		public String getMsgBody() {
 			return msgBody;

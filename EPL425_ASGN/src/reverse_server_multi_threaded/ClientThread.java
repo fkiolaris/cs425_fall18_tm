@@ -1,6 +1,9 @@
 package reverse_server_multi_threaded;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,13 +55,18 @@ public class ClientThread extends Thread  {
             do {                
                 ClientFormatMessage clientFormatMessage = ClientFormatMessage.getInstance("Hello", clientID, clientIP, null, port);  
                 text = ClientFormatMessage.objectToString(clientFormatMessage);
+                               
+                long startTime = System.currentTimeMillis();	//start request time
                 writer.println(text);
  
                 InputStream input = socket.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
  
                 String response = reader.readLine();
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                ReverseClient.writeToFile(elapsedTime+"", clientID);
  
+                System.out.println("Total elapsed http request/response time in milliseconds: " + elapsedTime);
                 System.out.println("Server Response:"+response);
  
             } while (currentRequest++ < MAX_REQUESTS_PER_USER);
@@ -79,4 +87,13 @@ public class ClientThread extends Thread  {
             System.out.println("I/O error: " + ex.getMessage());
         }
 	}
+	
+
+//	public void sendHttpRequest(byte[] requestData, Socket connection) {
+//	    long startTime = System.currentTimeMillis();
+//	    writeYourRequestData(connection.getOutputStream(), requestData);
+//	    byte[] responseData = readYourResponseData(connection.getInputStream());
+//	    long elapsedTime = System.currentTimeMillis() - startTime;
+//	    System.out.println("Total elapsed http request/response time in milliseconds: " + elapsedTime);
+//	}
 }
