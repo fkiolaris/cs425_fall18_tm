@@ -66,9 +66,8 @@ public class ReverseServer {
 		file.createNewFile();		
 		DataOutputStream stream = new DataOutputStream(new FileOutputStream(file, true));
 		
-		double cpuUsage = getProcessCpuLoad();
-		printUsage();
-		stream.writeBytes(requests+" " + cpuUsage + " " +printUsage() + "\n");
+		double cpuUsage = getProcessCpuLoad();		
+		stream.writeBytes(requests+" " + cpuUsage +"  "+ getMemoryUsageUtilization()+"\n");
 		stream.close();
 	}
     
@@ -89,25 +88,14 @@ public class ReverseServer {
         return ((int)(value * 1000) / 10.0);
     }
     
-    private static String printUsage() {
+    public static double getMemoryUsageUtilization() {
     	
-    	String allTimes = "";
-    	  OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
-    	  for (Method method : operatingSystemMXBean.getClass().getDeclaredMethods()) {
-    	    method.setAccessible(true);
-    	    if (method.getName().startsWith("get")
-    	        && Modifier.isPublic(method.getModifiers())) {
-    	            Object value;
-    	        try {
-    	            value = method.invoke(operatingSystemMXBean);
-    	        } catch (Exception e) {
-    	            value = e;
-    	        } // try
-    	        allTimes  += method.getName() + " = " + value + " ";
-    	    } // if
-    	  } // for
-    	  return allTimes;
-    	}
+    	long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+    	long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+    	long actualMemUsed=afterUsedMem-beforeUsedMem;
+//    	return actualMemUsed;
+    	return ((int)(actualMemUsed * 1000) / 10.0);
+    }
     
 	 
 }
