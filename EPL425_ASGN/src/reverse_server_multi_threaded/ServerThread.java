@@ -5,13 +5,19 @@ import java.net.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+import java.io.*;
+import java.net.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * This thread is responsible to handle client connection.
  */
 public class ServerThread extends Thread {
 	private Socket socket;
 	private static int counter = 0;
-	private static final int TIMER_MILISECONDS = 3000;
+	private static final int TIMER_MILISECONDS = 5000;
 	
 	public ServerThread(Socket socket) {
 		this.socket = socket;
