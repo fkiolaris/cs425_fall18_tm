@@ -59,10 +59,10 @@ public class ClientFormatMessage implements Serializable {
 			this.clientID = clientID;
 		}
 		
-		public String getPayload() {
+		public byte[] getPayload() {
 			return payload;
 		}
-		public void setPayload(String payload) {
+		public void setPayload(byte[] payload) {
 			this.payload = payload;
 		}
 
@@ -77,7 +77,7 @@ public class ClientFormatMessage implements Serializable {
 		private String clientIP;
 		private int port;
 		private int clientID;
-		private String payload;
+		private byte[] payload;
 	}
 	
 	public static class Body implements Serializable{
@@ -124,22 +124,29 @@ public class ClientFormatMessage implements Serializable {
 		return null;
 	}
 	
-	public static String calculatePayload() {
+	public static byte[] calculatePayload() {
 		int min = 300;
 		int max = 2000;
 		
 		Random rand = new Random();
 		int payload = rand.nextInt(max - min + 1) + min;
-		String strPayload = byteArray(payload);
+		byte[] strPayload = createByteArray(payload);
 		return strPayload;
 	}
 	
-	private static String byteArray(int kilobytes) {
+	public static byte[] createByteArray(int kilobytes) {
 		byte[] bytesData = new byte[kilobytes * 1024];
 		new Random().nextBytes(bytesData);
+//		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
+//		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
 
-		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
-		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
+		return bytesData;
+	}
+	
+	public static String byteArray(byte[] bytesData) {
+
+//		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
+//		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
 
 		String decodedDataUsingUTF8;
 		try {
@@ -153,7 +160,7 @@ public class ClientFormatMessage implements Serializable {
 		return null;
 	}
 	
-	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, String payload, int port, int repetitionID){
+	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, byte[] payload, int port, int repetitionID){
 		Body body = new Body();
 		Header header = new Header();
 		ClientFormatMessage clientFormatMessage = new ClientFormatMessage();

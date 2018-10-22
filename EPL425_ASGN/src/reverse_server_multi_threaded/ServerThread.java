@@ -40,7 +40,7 @@ public class ServerThread extends Thread {
 				}
 				ClientFormatMessage serverFormatMessage = ClientFormatMessage.getInstance("WELCOME", clientFormatMessage.getHeader().getClientID(), 
 						clientFormatMessage.getHeader().getClientIP(), ClientFormatMessage.calculatePayload(), clientFormatMessage.getHeader().getPort(),
-						clientFormatMessage.getHeader().getRepetitionID());			
+						clientFormatMessage.getHeader().getRepetitionID());
 
 //				System.out.println("Client Request:" + requestMessage);
 				writer.println(ClientFormatMessage.objectToString(serverFormatMessage));
