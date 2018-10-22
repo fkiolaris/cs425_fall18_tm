@@ -3,6 +3,7 @@ package reverse_server_multi_threaded;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Random;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -131,19 +132,20 @@ public class ClientFormatMessage implements Serializable {
 		Random rand = new Random();
 		int payload = rand.nextInt(max - min + 1) + min;
 		char[] text = new char[payload];
+	    Arrays.fill(text, 'a');
 //		String str = new String(1020*);
 //		byte[] strPayload = createByteArray(payload);
 		return text;
 	}
 	
-	public static byte[] createByteArray(int kilobytes) {
-		byte[] bytesData = new byte[kilobytes];
-		new Random().nextBytes(bytesData);
-//		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
-//		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
-
-		return bytesData;
-	}
+//	public static byte[] createByteArray(int kilobytes) {
+//		byte[] bytesData = new byte[kilobytes];
+//		new Random().nextBytes(bytesData);
+////		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
+////		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
+//
+//		return bytesData;
+//	}
 	
 	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, char[] payload, int port, int repetitionID){
 		Body body = new Body();
