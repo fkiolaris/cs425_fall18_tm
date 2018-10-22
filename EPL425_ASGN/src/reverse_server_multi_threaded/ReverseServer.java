@@ -93,7 +93,8 @@ public class ReverseServer {
     	long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
     	long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
     	long actualMemUsed=afterUsedMem-beforeUsedMem;
-    	return (100.0 * actualMemUsed)/(Runtime.getRuntime().totalMemory()*1.0);
+    	return actualMemUsed;
+//    	return (100.0 * actualMemUsed)/(Runtime.getRuntime().totalMemory()*1.0);
 //    	return ((int)(actualMemUsed * 1000) / 10.0);
     }
     
