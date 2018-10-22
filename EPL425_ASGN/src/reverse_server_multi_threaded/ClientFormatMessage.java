@@ -2,6 +2,7 @@ package reverse_server_multi_threaded;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -128,8 +129,28 @@ public class ClientFormatMessage implements Serializable {
 		int max = 2000;
 		
 		Random rand = new Random();
-		String payload = Integer.toString((rand.nextInt(max - min + 1) + min));
-		return payload;
+		int payload = rand.nextInt(max - min + 1) + min;
+		String strPayload = byteArray(payload);
+		return strPayload;
+	}
+	
+	private static String byteArray(int kilobytes) {
+		byte[] bytesData = new byte[kilobytes * 1024];
+		new Random().nextBytes(bytesData);
+
+		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
+		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
+
+		String decodedDataUsingUTF8;
+		try {
+			decodedDataUsingUTF8 = new String(bytesData, "UTF-8"); // Best way to decode using "UTF-8"
+			return decodedDataUsingUTF8;
+//			System.out.println("Text Decryted using UTF-8 : " + decodedDataUsingUTF8);
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, String payload, int port, int repetitionID){

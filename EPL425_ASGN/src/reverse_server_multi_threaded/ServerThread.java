@@ -11,7 +11,7 @@ import java.util.TimerTask;
 public class ServerThread extends Thread {
 	private Socket socket;
 	private static int counter = 0;
-	private static final int TIMER_MILISECONDS = 1000;
+	private static final int TIMER_MILISECONDS = 3000;
 	
 	public ServerThread(Socket socket) {
 		this.socket = socket;
