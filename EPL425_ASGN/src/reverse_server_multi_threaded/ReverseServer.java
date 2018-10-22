@@ -2,20 +2,13 @@ package reverse_server_multi_threaded;
 
 import java.io.*;
 import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.net.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 /**
  * This program demonstrates a simple TCP/IP socket server that echoes every
@@ -73,7 +66,6 @@ public class ReverseServer {
 	}
     
     public static double getProcessCpuLoad() throws Exception {
-
         MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
         ObjectName name    = ObjectName.getInstance("java.lang:type=OperatingSystem");
         AttributeList list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
@@ -89,14 +81,11 @@ public class ReverseServer {
         return ((int)(value * 1000) / 10.0);
     }
     
-    public static double getMemoryUsageUtilization() {
-    	    	
+    public static double getMemoryUsageUtilization() {    	    	
     	long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
     	long actualMemUsed=afterUsedMem-beforeUsedMem;
-//    	return actualMemUsed;
-    	return (100.0 * actualMemUsed)/(Runtime.getRuntime().totalMemory()*1.0);
-//    	return ((int)(actualMemUsed * 1000) / 10.0);
+    	double persantage = (100.0 * actualMemUsed)/(Runtime.getRuntime().totalMemory()*1.0);
+    	return ((int)(persantage * 10) / 10.0);
     }
     
-	 
 }
