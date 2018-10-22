@@ -20,8 +20,7 @@ public class ReverseClient{
         try {
             String hostname = args[0];
             int port = Integer.parseInt(args[1]);
-            int repetitions = 1;
-            		//Integer.parseInt(args[2]);
+            int repetitions = Integer.parseInt(args[2]);
             initializeFiles(); 
             
             for (int i=1; i<=repetitions; i++) {             	                      

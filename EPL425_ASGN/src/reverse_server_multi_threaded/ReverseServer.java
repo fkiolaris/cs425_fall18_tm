@@ -1,10 +1,17 @@
 package reverse_server_multi_threaded;
 
 import java.io.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
 import java.net.*;
 import java.util.Timer;
 import java.util.TimerTask;
- 
+
+import javax.management.Attribute;
+import javax.management.AttributeList;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+
 /**
  * This program demonstrates a simple TCP/IP socket server that echoes every
  * message from the client in reversed form.
@@ -13,6 +20,7 @@ import java.util.TimerTask;
 public class ReverseServer {
 	
 	private static final String THROUGHPUT_FILE = "throughtputs";	
+	
 	
     public static void main(String[] args) { 
         int port = Integer.parseInt(args[0]);
@@ -48,13 +56,32 @@ public class ReverseServer {
     	        new File(dirFiles[i].getName()).delete();
     }
     
-    synchronized static void writeToFile(int requests, int fileID) throws IOException {			
+    synchronized static void writeToFile(int requests, int fileID) throws Exception {			
 		File file = new File(THROUGHPUT_FILE + fileID);
 		file.createNewFile();		
 		DataOutputStream stream = new DataOutputStream(new FileOutputStream(file, true));
-		stream.writeBytes(requests+"\n");
+		
+		double cpuUsage = getProcessCpuLoad();
+		stream.writeBytes(requests+" " + cpuUsage + "\n");
 		stream.close();
 	}
+    
+    public static double getProcessCpuLoad() throws Exception {
+
+        MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name    = ObjectName.getInstance("java.lang:type=OperatingSystem");
+        AttributeList list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
+
+        if (list.isEmpty())     return Double.NaN;
+
+        Attribute att = (Attribute)list.get(0);
+        Double value  = (Double)att.getValue();
+
+        // usually takes a couple of seconds before we get real values
+        if (value == -1.0)      return Double.NaN;
+        // returns a percentage value with 1 decimal point precision
+        return ((int)(value * 1000) / 10.0);
+    }
     
 	 
 }

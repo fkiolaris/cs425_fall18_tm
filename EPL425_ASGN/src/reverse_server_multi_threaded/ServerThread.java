@@ -28,9 +28,7 @@ public class ServerThread extends Thread {
 			String requestMessage;
 
 			do {				
-				requestMessage = reader.readLine();									
-//				System.out.println("Request:"+requestMessage);	
-											
+				requestMessage = reader.readLine();																				
 			
 				ClientFormatMessage clientFormatMessage = ClientFormatMessage.stringToObject(requestMessage);
 				if (clientFormatMessage.getBody().getMsgBody().equals("BYE")) {
@@ -68,6 +66,9 @@ public class ServerThread extends Thread {
 					ReverseServer.writeToFile(counter, repetitionID);
 					counter = 0;
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}    		  
