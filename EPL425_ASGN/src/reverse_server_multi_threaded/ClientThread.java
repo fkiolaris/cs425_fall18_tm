@@ -63,12 +63,12 @@ public class ClientThread extends Thread  {
                 InputStream input = socket.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
  
-//                String response = reader.readLine();
+                String response = reader.readLine();
                 long elapsedTime = System.currentTimeMillis() - startTime;
                 ReverseClient.writeToFile(elapsedTime+"", clientID, repetitionID);
  
-//                System.out.println("Total elapsed http request/response time in milliseconds: " + elapsedTime);
-//                System.out.println("Server Response:"+response);
+                System.out.println("Total elapsed http request/response time in milliseconds: " + elapsedTime);
+                System.out.println("Server Response:"+response);
  
             } while (currentRequest++ < MAX_REQUESTS_PER_USER);
                                 
