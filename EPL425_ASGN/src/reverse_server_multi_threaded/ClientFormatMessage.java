@@ -135,29 +135,12 @@ public class ClientFormatMessage implements Serializable {
 	}
 	
 	public static byte[] createByteArray(int kilobytes) {
-		byte[] bytesData = new byte[kilobytes * 1024];
+		byte[] bytesData = new byte[kilobytes];
 		new Random().nextBytes(bytesData);
 //		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
 //		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
 
 		return bytesData;
-	}
-	
-	public static String byteArray(byte[] bytesData) {
-
-//		System.out.println("\nbytesData : " + bytesData); // .getBytes on String will return Hashcode value
-//		System.out.println("bytesData.toString() : " + bytesData.toString()); // .toString() will return Hashcode value
-
-		String decodedDataUsingUTF8;
-		try {
-			decodedDataUsingUTF8 = new String(bytesData, "UTF-8"); // Best way to decode using "UTF-8"
-			return decodedDataUsingUTF8;
-//			System.out.println("Text Decryted using UTF-8 : " + decodedDataUsingUTF8);
-
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, byte[] payload, int port, int repetitionID){
