@@ -12,6 +12,11 @@ import javax.management.AttributeList;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 /**
  * This program demonstrates a simple TCP/IP socket server that echoes every
  * message from the client in reversed form.
@@ -62,7 +67,8 @@ public class ReverseServer {
 		DataOutputStream stream = new DataOutputStream(new FileOutputStream(file, true));
 		
 		double cpuUsage = getProcessCpuLoad();
-		stream.writeBytes(requests+" " + cpuUsage + "\n");
+		printUsage();
+		stream.writeBytes(requests+" " + cpuUsage + " " +printUsage() + "\n");
 		stream.close();
 	}
     
@@ -82,6 +88,26 @@ public class ReverseServer {
         // returns a percentage value with 1 decimal point precision
         return ((int)(value * 1000) / 10.0);
     }
+    
+    private static String printUsage() {
+    	
+    	String allTimes = "";
+    	  OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+    	  for (Method method : operatingSystemMXBean.getClass().getDeclaredMethods()) {
+    	    method.setAccessible(true);
+    	    if (method.getName().startsWith("get")
+    	        && Modifier.isPublic(method.getModifiers())) {
+    	            Object value;
+    	        try {
+    	            value = method.invoke(operatingSystemMXBean);
+    	        } catch (Exception e) {
+    	            value = e;
+    	        } // try
+    	        allTimes  += method.getName() + " = " + value + " ";
+    	    } // if
+    	  } // for
+    	  return allTimes;
+    	}
     
 	 
 }
