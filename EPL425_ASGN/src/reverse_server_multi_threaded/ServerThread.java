@@ -29,7 +29,7 @@ public class ServerThread extends Thread {
 
 			do {				
 				requestMessage = reader.readLine();									
-				System.out.println("Request:"+requestMessage);	
+//				System.out.println("Request:"+requestMessage);	
 											
 			
 				ClientFormatMessage clientFormatMessage = ClientFormatMessage.stringToObject(requestMessage);
