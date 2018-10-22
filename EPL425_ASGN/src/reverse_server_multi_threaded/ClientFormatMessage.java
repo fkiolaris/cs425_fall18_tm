@@ -142,8 +142,7 @@ public class ClientFormatMessage implements Serializable {
 		header.setClientIP(clientIP);
 		header.setPayload(payload);
 		header.setPort(port);
-		header.setRepetitionID(repetitionID);
-		
+		header.setRepetitionID(repetitionID);		
 		clientFormatMessage.setBody(body);
 		clientFormatMessage.setHeader(header);
 		
