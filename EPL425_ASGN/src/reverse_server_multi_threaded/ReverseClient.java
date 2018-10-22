@@ -21,8 +21,7 @@ public class ReverseClient{
             String hostname = args[0];
             int port = Integer.parseInt(args[1]);
             int repetitions = Integer.parseInt(args[2]);
-            initializeFiles();          
-            
+            initializeFiles();                      
             for (int i=1; i<=repetitions; i++) {             	                      
             	runAllUsers(i, port, hostname); 
             }

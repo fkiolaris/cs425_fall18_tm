@@ -131,7 +131,7 @@ public class ClientFormatMessage implements Serializable {
 		
 		Random rand = new Random();
 		int payload = rand.nextInt(max - min + 1) + min;
-		char[] text = new char[payload];
+		char[] text = new char[payload*1024];
 	    Arrays.fill(text, 'a');
 //		String str = new String(1020*);
 //		byte[] strPayload = createByteArray(payload);
