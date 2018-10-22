@@ -24,12 +24,13 @@ import java.lang.reflect.Modifier;
  */
 public class ReverseServer {
 	
+	private static long beforeUsedMem;
 	private static final String THROUGHPUT_FILE = "throughtputs";	
 	
 	
     public static void main(String[] args) { 
         int port = Integer.parseInt(args[0]);
- 
+        beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  
@@ -89,12 +90,11 @@ public class ReverseServer {
     }
     
     public static double getMemoryUsageUtilization() {
-    	
-    	long beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+    	    	
     	long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
     	long actualMemUsed=afterUsedMem-beforeUsedMem;
-    	return actualMemUsed;
-//    	return (100.0 * actualMemUsed)/(Runtime.getRuntime().totalMemory()*1.0);
+//    	return actualMemUsed;
+    	return (100.0 * actualMemUsed)/(Runtime.getRuntime().totalMemory()*1.0);
 //    	return ((int)(actualMemUsed * 1000) / 10.0);
     }
     
