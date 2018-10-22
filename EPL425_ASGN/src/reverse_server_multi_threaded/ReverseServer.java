@@ -24,25 +24,25 @@ public class ReverseServer {
 	
     public static void main(String[] args) { 
         int port = Integer.parseInt(args[0]);
-        byteArray(300);
-//        beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-//        
-//        try (ServerSocket serverSocket = new ServerSocket(port)) {
-// 
-//        	initializeFile();
-//            System.out.println("Server is listening on port " + port);
-// 
-//            while (true) {
-//                Socket socket = serverSocket.accept();
-//                System.out.println("New client connected");
-//                 
-//                new ServerThread(socket).start();
-//            }
-// 
-//        } catch (IOException ex) {
-//            System.out.println("Server exception: " + ex.getMessage());
-//            ex.printStackTrace();
-//        }
+  
+        beforeUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+        
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+ 
+        	initializeFile();
+            System.out.println("Server is listening on port " + port);
+ 
+            while (true) {
+                Socket socket = serverSocket.accept();
+                System.out.println("New client connected");
+                 
+                new ServerThread(socket).start();
+            }
+ 
+        } catch (IOException ex) {
+            System.out.println("Server exception: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
     
     public static void initializeFile() throws IOException {
@@ -83,22 +83,6 @@ public class ReverseServer {
         return ((int)(value * 1000) / 10.0);
     }
     
-    public static void byteArray(int kilobytes) {
-    		    byte[] bytesData = new byte[kilobytes*1024];
-	    new Random().nextBytes(bytesData);
-
-	    System.out.println("\nbytesData : " + bytesData);  // .getBytes on String will return Hashcode value
-	    System.out.println("bytesData.toString() : " + bytesData.toString());  // .toString() will return Hashcode value
- 
-	    String decodedDataUsingUTF8;
-		try {
-			decodedDataUsingUTF8 = new String(bytesData, "UTF-8");  // Best way to decode using "UTF-8"
-		    System.out.println("Text Decryted using UTF-8 : " + decodedDataUsingUTF8);
-		    
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-    }
     
     public static double getMemoryUsageUtilization() {    	    	
     	long afterUsedMem=Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
