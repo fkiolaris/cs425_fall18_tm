@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class ServerThread extends Thread {
 	private Socket socket;
 	private static int counter = 0;
-	private static final int TIMER_MILISECONDS = 5000;
+	private static final int TIMER_MILISECONDS = 1000;
 	
 	public ServerThread(Socket socket) {
 		this.socket = socket;
@@ -54,6 +54,11 @@ public class ServerThread extends Thread {
 			} while (true);
 
 			socket.close();
+			writer.close();
+			output.close();
+			reader.close();
+			input.close();
+			
 		} catch (IOException ex) {
 			System.out.println("Server exception: " + ex.getMessage());
 			ex.printStackTrace();

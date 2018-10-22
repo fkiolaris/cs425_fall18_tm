@@ -77,6 +77,8 @@ public class ClientThread extends Thread  {
             
             System.out.println("Connection terminated..");
             socket.close();
+			writer.close();
+			output.close();			
  
         } catch (UnknownHostException ex) {	 
             System.out.println("Server not found: " + ex.getMessage());
