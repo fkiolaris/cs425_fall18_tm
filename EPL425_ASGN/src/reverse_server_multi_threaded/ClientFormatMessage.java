@@ -59,10 +59,10 @@ public class ClientFormatMessage implements Serializable {
 			this.clientID = clientID;
 		}
 		
-		public byte[] getPayload() {
+		public char[] getPayload() {
 			return payload;
 		}
-		public void setPayload(byte[] payload) {
+		public void setPayload(char[] payload) {
 			this.payload = payload;
 		}
 
@@ -77,7 +77,7 @@ public class ClientFormatMessage implements Serializable {
 		private String clientIP;
 		private int port;
 		private int clientID;
-		private byte[] payload;
+		private char[] payload;
 	}
 	
 	public static class Body implements Serializable{
@@ -124,14 +124,16 @@ public class ClientFormatMessage implements Serializable {
 		return null;
 	}
 	
-	public static byte[] calculatePayload() {
+	public static char[] calculatePayload() {
 		int min = 300;
 		int max = 2000;
 		
 		Random rand = new Random();
 		int payload = rand.nextInt(max - min + 1) + min;
-		byte[] strPayload = createByteArray(payload);
-		return strPayload;
+		char[] text = new char[payload];
+//		String str = new String(1020*);
+//		byte[] strPayload = createByteArray(payload);
+		return text;
 	}
 	
 	public static byte[] createByteArray(int kilobytes) {
@@ -143,7 +145,7 @@ public class ClientFormatMessage implements Serializable {
 		return bytesData;
 	}
 	
-	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, byte[] payload, int port, int repetitionID){
+	public static ClientFormatMessage getInstance(String message, int clientID, String clientIP, char[] payload, int port, int repetitionID){
 		Body body = new Body();
 		Header header = new Header();
 		ClientFormatMessage clientFormatMessage = new ClientFormatMessage();

@@ -46,7 +46,7 @@ public class ReverseClient{
     	             //If the Files starts with the word "phase"
     	    if (dirFiles[i].getName().startsWith(latencyFile, 0))
     	                          //Delete This file
-    	        new File(dirFiles[i].getName()).delete();
+    	     new File(dirFiles[i].getName()).delete();
     }
     
 	 synchronized static void writeToFile(String time, int userID, int fileID) throws IOException {			
