@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class ReverseClient{
 	
-	private static final int USER = 10;
+	private static final int USER = 30;
 	private static final String latencyFile = "latencyTime";
 
     public static void main(String[] args) {
